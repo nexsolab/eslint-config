@@ -5,7 +5,52 @@ Used in the _nexso_ development (a SaaS ERP).
 
 > This is intended to work in Node.js 14+ environments.
 
-## module imports
+## How to use
+
+Install the config as development dependency `npm i -D @nexso/eslint-config`.
+
+Create a `.eslintrc` file with:
+
+```json
+{
+  "extends": "@nexso",
+  "rules": [
+      // your custom rules
+  ]
+}
+```
+
+### Using with eslint wizard
+
+If you want to use with `eslint --init` command, simple change the file:
+
+* Windows (Global installation):
+  `%APPDATA%\npm\node_modules\eslint\lib\init\config-initializer.js`
+
+And find the question: `name: "styleguide"` (~ line 540) and add nexso option:
+
+```javascript
+{
+    type: "select",
+    name: "styleguide",
+    message: "Which style guide do you want to follow?",
+    choices: [
+        { message: "nexso: https://github.com/nexsodev/eslint-config", name: "@nexso/eslint-config" }, // This
+        { message: "Airbnb: https://github.com/airbnb/javascript", name: "airbnb" },
+        { message: "Standard: https://github.com/standard/standard", name: "standard" },
+        { message: "Google: https://github.com/google/eslint-config-google", name: "google" },
+        { message: "XO: https://github.com/xojs/eslint-config-xo", name: "xo" }
+    ],
+    // ...
+```
+
+You can also use the file from this repo: [config-initializer.js](config-initializer.js).
+
+## Differences from AirBnb Base
+
+Some configs from [airbnb-base](https://www.npmjs.com/package/eslint-config-airbnb-base) was changed:
+
+### module imports
 
 Use ES6 syntax to import modules, natively in node.js 14+.
 
@@ -37,7 +82,15 @@ Note that you must add `type: module` to your `package.json` file:
 }
 ```
 
-### Import extensions
+So the source type is set to `module`:
+
+```json
+"parserOptions": {
+    "sourceType": "module"
+}
+```
+
+#### Import extensions
 
 Node.js type module requires that you specify the extension when importing a local file:
 
@@ -54,7 +107,7 @@ So the rule **import/extensions** is set as:
 }]
 ```
 
-## Private fields/methods
+### Private fields/methods
 
 Enable private fields and private methods:
 
@@ -73,7 +126,7 @@ For this work in VS Code, Babel parser should be used and two plugins are used:
 },
 ```
 
-## for await...of
+### for await...of
 
 AirBnB config doesn't support this statement and thrown an error:
 
@@ -103,7 +156,7 @@ This config enables this with the rules:
 
 > Note the absence of `ForOfStatement` selector. (Since we don't have specific AST for `for await...of`).
 
-## max-len in JSDoc comments
+### max-len in JSDoc comments
 
 Ignore `max-len` in comments to not warn about long JS Docs lines in pure JavaScript.
 
