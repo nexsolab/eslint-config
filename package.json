@@ -1,0 +1,50 @@
+{
+  "name": "@nexso/eslint-config",
+  "version": "1.0.0",
+  "description": "nexso ESLint configuration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nexsolab/arch-base-common/eslint-config-nexso"
+  },
+  "keywords": [
+    "eslintconfig",
+    "eslint",
+    "lint",
+    "javascript",
+    "code",
+    "style",
+    "development",
+    "tool",
+    "dev",
+    "airbnb",
+    "es6",
+    "es2015",
+    "es2016",
+    "es2017",
+    "es2018",
+    "es2020",
+    "es2021",
+    "javascript"
+  ],
+  "author": "Gabriel Anderson <gcacars@gmail.com> (https://github.com/gcacars)",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "dependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/eslint-parser": "^7.15.0",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-proposal-private-methods": "^7.14.5"
+  },
+  "babel": {},
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.1"
+  }
+}
