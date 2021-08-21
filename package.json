@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nexsolab/arch-base-common/eslint-config-nexso"
+    "url": "https://github.com/nexsodev/eslint-config"
   },
   "keywords": [
     "eslintconfig",
@@ -32,9 +32,6 @@
   ],
   "author": "Gabriel Anderson <gcacars@gmail.com> (https://github.com/gcacars)",
   "license": "Apache-2.0",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "dependencies": {
     "@babel/core": "^7.15.0",
     "@babel/eslint-parser": "^7.15.0",
