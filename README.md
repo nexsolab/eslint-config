@@ -15,12 +15,23 @@ Create a `.eslintrc` file with:
 {
   "extends": "@nexso",
   "rules": [
-      // your custom rules
   ]
 }
 ```
 
-### Using with eslint wizard
+Add type module to your `package.json` file and an empty babel config (if you don't have custom config):
+
+```json
+{
+  "type": "module",
+  "name": "your-app-or-lib-name",
+  "version": "1.0.0",
+
+  "babel": {}
+}
+```
+
+### Using with eslint wizard (optional)
 
 If you want to use with `eslint --init` command, simple change the file:
 
