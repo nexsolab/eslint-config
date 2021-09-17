@@ -2,6 +2,16 @@ module.exports = {
   // AirBnB
   extends: [
     'airbnb-base',
+    'plugin:security/recommended',
+    'plugin:security-node/recommended',
+    'plugin:@microsoft/sdl/node',
+  ],
+
+  // Security plugins
+  plugins: [
+    'security',
+    'security-node',
+    '@microsoft/sdl',
   ],
 
   // ES2021
@@ -16,6 +26,7 @@ module.exports = {
         '@babel/plugin-proposal-private-methods',
       ],
     },
+    requireConfigFile: false,
   },
 
   // Rules

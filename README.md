@@ -7,7 +7,7 @@ Used in the _nexso_ development (a SaaS ERP).
 
 ## How to use
 
-Install the config as development dependency `npm i -D @nexso/eslint-config`.
+Install the config as development dependency `npm i -D eslint @nexso/eslint-config`.
 
 Create a `.eslintrc` file with:
 
@@ -19,15 +19,13 @@ Create a `.eslintrc` file with:
 }
 ```
 
-Add type module to your `package.json` file and an empty babel config (if you don't have custom config):
+Add type module to your `package.json` file:
 
 ```json
 {
   "type": "module",
   "name": "your-app-or-lib-name",
   "version": "1.0.0",
-
-  "babel": {}
 }
 ```
 
@@ -37,6 +35,9 @@ If you want to use with `eslint --init` command, simple change the file:
 
 * Windows (Global installation):
   `%APPDATA%\npm\node_modules\eslint\lib\init\config-initializer.js`
+
+* Linux:
+  `/usr/local/lib/node_modules/eslint/lib/init/config-initializer.js`
 
 And find the question: `name: "styleguide"` (~ line 540) and add nexso option:
 
@@ -52,10 +53,17 @@ And find the question: `name: "styleguide"` (~ line 540) and add nexso option:
         { message: "Google: https://github.com/google/eslint-config-google", name: "google" },
         { message: "XO: https://github.com/xojs/eslint-config-xo", name: "xo" }
     ],
-    // ...
 ```
 
-You can also use the file from this repo: [config-initializer.js](config-initializer.js).
+You can also use the file from this repo: [config-initializer.js](https://github.com/nexsolab/eslint-config/blob/main/config-initializer.js).
+
+## Secure by default
+
+This config also includes security plugins:
+
+* [eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security)
+* [eslint-plugin-security-node](https://github.com/gkouziik/eslint-plugin-security-node)
+* [@microsoft/eslint-plugin-sdl](https://github.com/microsoft/eslint-plugin-sdl)
 
 ## Differences from AirBnb Base
 
@@ -89,7 +97,6 @@ Note that you must add `type: module` to your `package.json` file:
   "name": "your-application",
   "version": "1.0.0",
   "main": "index.js"
-  ...
 }
 ```
 
@@ -190,3 +197,7 @@ So the rule **import/extensions** is set as:
     }
 ]
 ```
+
+## Version history
+
+See [CHANGELOG](https://github.com/nexsolab/eslint-config/blob/main/CHANGELOG.md)
