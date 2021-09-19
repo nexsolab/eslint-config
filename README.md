@@ -62,7 +62,6 @@ You can also use the file from this repo: [config-initializer.js](https://github
 This config also includes security plugins:
 
 * [eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security)
-* [eslint-plugin-security-node](https://github.com/gkouziik/eslint-plugin-security-node)
 * [@microsoft/eslint-plugin-sdl](https://github.com/microsoft/eslint-plugin-sdl)
 
 ## Differences from AirBnb Base
