@@ -1,11 +1,9 @@
 {
   "name": "@nexso/eslint-config",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "nexso ESLint configuration",
   "main": "index.js",
-  "scripts": {
-    "publish": "npm publish --access=public"
-  },
+  "scripts": { },
   "repository": {
     "type": "git",
     "url": "https://github.com/nexsolab/eslint-config"
