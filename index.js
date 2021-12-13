@@ -4,10 +4,13 @@ module.exports = {
     'airbnb-base',
     'plugin:security/recommended',
     'plugin:@microsoft/sdl/node',
+    'plugin:import/recommended',
   ],
 
-  // Security plugins
+  // Plugins
   plugins: [
+    'import',
+    // Security
     'security',
     '@microsoft/sdl',
   ],
