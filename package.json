@@ -30,7 +30,12 @@
   ],
   "author": "Gabriel Anderson <gcacars@gmail.com> (https://github.com/gcacars)",
   "license": "Apache-2.0",
-  "dependencies": {
+  "dependencies": {},
+  "babel": {},
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  },
+  "peerDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/eslint-parser": "^7.15.0",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
@@ -40,9 +45,5 @@
     "eslint-plugin-import": "^2.24.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-security": "^1.4.0"
-  },
-  "babel": {},
-  "devDependencies": {
-    "eslint": "^7.32.0"
   }
 }
