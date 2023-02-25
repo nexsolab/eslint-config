@@ -1,10 +1,17 @@
 # Version history
 
-## 1.1.2 (17/09/2021)
+## 1.2.0 (25/02/2023)
+
+* Dependencies updated
+  * `eslint` 8+
+  * `eslint-config-airbnb-base` 15+
+  * `@microsoft/eslint-plugin-sdl` 0.2.0
+
+### 1.1.2 (17/09/2021)
 
 * Fix problems with `@microsoft/sdl`:
   * `eslint-plugin-node` as dependency.
-  * remove `eslint-plugin-security-node` because was emitting errors.
+  * remove `eslint-plugin-security-node` because it was emitting errors.
 
 ### 1.1.1 (17/09/2021)
 
