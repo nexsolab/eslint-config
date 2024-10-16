@@ -1,9 +1,9 @@
 # @nexso/eslint-config
 
-A extension of `eslint-config-airbnb-base` style but for newer javascript (ES2021).
+A extension of `eslint-config-airbnb-base` style but for newer javascript (ES2021+).
 Used in the _nexso_ development (an aPaaS).
 
-> This is intended to work in Node.js 14+ environments.
+> This is intended to work in Node.js 18+ environments.
 
 ## How to use
 

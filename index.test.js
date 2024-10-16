@@ -14,6 +14,7 @@ async function main() {
   assert(ruleIds.includes('no-unused-vars'));
   assert(ruleIds.includes('eol-last'));
   assert(ruleIds.includes('semi'));
+  console.log('Tests passed');
 }
 
 main();
