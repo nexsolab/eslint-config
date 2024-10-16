@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nexsolab/eslint-config"
+    "url": "git+https://github.com/nexsolab/eslint-config.git"
   },
   "keywords": [
     "eslintconfig",
