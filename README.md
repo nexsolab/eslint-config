@@ -1,16 +1,33 @@
 # @nexso/eslint-config
 
-A extension of `eslint-config-airbnb-base` style but for newer javascript (ES2021+).
+A comprehensive ESLint configuration with AirBnB-style rules optimized for modern JavaScript (ES2021+).
 Used in the _nexso_ development (an aPaaS).
 
-> This config uses ESLint Flat Config format, compatible with ESLint 8.57+ and ready for ESLint 9.
-> This is intended to work in Node.js 18+ environments.
+> ✨ **Version 2.0+**: Now fully compatible with ESLint 9.x using Flat Config format!
+>
+> - ✅ ESLint 9.x support with Flat Config
+> - ✅ AirBnB-style rules (manually implemented for full compatibility)
+> - ✅ Security rules included
+> - ✅ Import/export validation
+> - ✅ Node.js 18+ environments
+
+## Features
+
+- **AirBnB Style Rules**: All core AirBnB coding standards
+- **Security**: Built-in security linting with `eslint-plugin-security` and `@microsoft/eslint-plugin-sdl`
+- **Import Management**: Proper import/export validation
+- **Modern JavaScript**: ES2021+ features supported
+- **No Dependencies Issues**: AirBnB rules manually implemented for full ESLint 9 compatibility
 
 ## How to use
 
-Install the config as development dependency `npm i -D eslint @nexso/eslint-config`.
+Install the config as development dependency:
 
-### ESLint 8.57+ (Flat Config)
+```bash
+npm i -D eslint @nexso/eslint-config eslint-plugin-import
+```
+
+### ESLint 9.x (Flat Config) - Recommended
 
 Create a `eslint.config.js` file with:
 
@@ -53,10 +70,10 @@ Add type `module` to your `package.json` file:
 
 If you want to use with `eslint --init` command, simple change the file:
 
-* Windows (Global installation):
+- Windows (Global installation):
   `%APPDATA%\npm\node_modules\eslint\lib\init\config-initializer.js`
 
-* Linux:
+- Linux:
   `/usr/local/lib/node_modules/eslint/lib/init/config-initializer.js`
 
 And find the question: `name: "styleguide"` (~ line 540) and add nexso option:
@@ -81,8 +98,8 @@ You can also use the file from this repo: [config-initializer.js](https://github
 
 This config also includes security plugins:
 
-* [eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security)
-* [@microsoft/eslint-plugin-sdl](https://github.com/microsoft/eslint-plugin-sdl)
+- [eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security)
+- [@microsoft/eslint-plugin-sdl](https://github.com/microsoft/eslint-plugin-sdl)
 
 ## Differences from AirBnb Base
 
@@ -215,6 +232,25 @@ So the rule **import/extensions** is set as:
         "ignoreComments": true 
     }
 ]
+```
+
+### function-paren-newline to consistent arguments
+
+```javascript
+async function sample(arg1, arg2, arg3) {
+  const result = await someAsyncFunctionWithLotsOfArguments(
+    argumentLongName1,
+    argumentLongName2,
+    argumentLongName3,
+  );
+
+  // or:
+
+  const result = await someAsyncFunctionWithLotsOfArguments(
+    argumentLongName1, argumentLongName2, argumentLongName3, argumentLongName4,
+    argumentLongName5, argumentLongName6,
+  );
+}
 ```
 
 ## Version history
