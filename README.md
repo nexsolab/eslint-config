@@ -3,23 +3,43 @@
 A extension of `eslint-config-airbnb-base` style but for newer javascript (ES2021+).
 Used in the _nexso_ development (an aPaaS).
 
+> This config uses ESLint Flat Config format, compatible with ESLint 8.57+ and ready for ESLint 9.
 > This is intended to work in Node.js 18+ environments.
 
 ## How to use
 
 Install the config as development dependency `npm i -D eslint @nexso/eslint-config`.
 
-Create a `.eslintrc` file with:
+### ESLint 8.57+ (Flat Config)
 
-```json
-{
-  "extends": "@nexso",
-  "rules": [
-  ]
-}
+Create a `eslint.config.js` file with:
+
+```js
+import nexso from '@nexso/eslint-config';
+
+export default [
+  ...nexso,
+  {
+    // Your custom rules here
+    rules: {
+      // Override rules if needed
+    }
+  }
+];
 ```
 
-Add type module to your `package.json` file:
+### Legacy ESLint Configuration (.eslintrc)
+
+If you're still using ESLint with the legacy configuration format (for backwards compatibility), you can use the legacy export:
+
+```js
+// .eslintrc.js
+module.exports = {
+  extends: ['@nexso/eslint-config/legacy'],
+};
+```
+
+Add type `module` to your `package.json` file:
 
 ```json
 {
