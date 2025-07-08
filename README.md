@@ -24,7 +24,7 @@ Used in the _nexso_ development (an aPaaS).
 Install the config as development dependency:
 
 ```bash
-npm i -D eslint @nexso/eslint-config eslint-plugin-import
+npm i -D @nexso/eslint-config
 ```
 
 ### ESLint 9.x (Flat Config) - Recommended
@@ -251,6 +251,14 @@ async function sample(arg1, arg2, arg3) {
     argumentLongName5, argumentLongName6,
   );
 }
+```
+
+### MongoDB compatibility
+
+It's allowed to use underscore for `_id` field in MongoDB documents:
+
+```javascript
+const result = await collection.findOne({ _id: 'some-id' }); // no more no-underscore-dangle error
 ```
 
 ## Version history

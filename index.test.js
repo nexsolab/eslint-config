@@ -1,5 +1,7 @@
-const assert = require('assert');
-const { ESLint } = require('eslint');
+import assert from 'assert';
+import { ESLint } from 'eslint';
+
+const logger = console;
 
 async function main() {
   // Test the flat config
@@ -17,25 +19,25 @@ async function main() {
       assert(ruleIds.includes('no-var'), 'Should include no-var rule');
       assert(ruleIds.includes('no-unused-vars'), 'Should include no-unused-vars rule');
       // eslint-disable-next-line no-console
-      console.log('Tests passed - Flat config is working correctly');
+      logger.log('Tests passed - Flat config is working correctly');
     } else {
       // eslint-disable-next-line no-console
-      console.log('Warning: No errors found, config may not be working as expected');
+      logger.log('Warning: No errors found, config may not be working as expected');
     }
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Error testing flat config:', error.message);
+    logger.error('Error testing flat config:', error.message);
 
     // Fallback test - just check if config loads
     try {
-      const config = require('./index.js');
+      const config = import('./index.js');
       assert(Array.isArray(config), 'Config should be an array for flat config');
       assert(config.length > 0, 'Config should have at least one configuration object');
       // eslint-disable-next-line no-console
-      console.log('Flat config structure is valid');
+      logger.log('Flat config structure is valid');
     } catch (loadError) {
       // eslint-disable-next-line no-console
-      console.error('Failed to load config:', loadError.message);
+      logger.error('Failed to load config:', loadError.message);
       process.exit(1);
     }
   }

@@ -1,8 +1,8 @@
-const js = require('@eslint/js');
-const securityPlugin = require('eslint-plugin-security');
-const microsoftSdlPlugin = require('@microsoft/eslint-plugin-sdl');
-const importPlugin = require('eslint-plugin-import');
-const babelEslintParser = require('@babel/eslint-parser');
+import js from '@eslint/js';
+import securityPlugin from 'eslint-plugin-security';
+import microsoftSdlPlugin from '@microsoft/eslint-plugin-sdl';
+import importPlugin from 'eslint-plugin-import';
+import babelEslintParser from '@babel/eslint-parser';
 
 // AirBnB-style rules manually extracted for ESLint 9+ flat config compatibility
 function getAirbnbRules() {
@@ -103,7 +103,7 @@ function getAirbnbRules() {
   };
 }
 
-module.exports = [
+export default [
   // Base configuration from @eslint/js
   js.configs.recommended,
 
@@ -120,7 +120,14 @@ module.exports = [
           plugins: [
             '@babel/plugin-transform-class-properties',
             '@babel/plugin-transform-private-methods',
-          ],
+          ].filter((plugin) => {
+            try {
+              import(plugin);
+              return true;
+            } catch {
+              return false;
+            }
+          }),
         },
         requireConfigFile: false,
       },

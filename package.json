@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "@nexso/eslint-config",
   "version": "2.0.0",
   "description": "nexso ESLint configuration with ESLint 9 Flat Config support",
@@ -41,22 +42,21 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "dependencies": {
+  "dependencies": {},
+  "babel": {},
+  "devDependencies": {
+    "eslint": "^9.30.1"
+  },
+  "peerDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/eslint-parser": "^7.26.0",
     "@babel/plugin-transform-class-properties": "^7.27.1",
     "@babel/plugin-transform-private-methods": "^7.27.1",
     "@eslint/js": "^9.15.0",
     "@microsoft/eslint-plugin-sdl": "^1.1.0",
+    "eslint": "^9.30.1",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-security": "^3.0.1"
-  },
-  "babel": {},
-  "devDependencies": {
-    "eslint": "^9.30.1"
-  },
-  "peerDependencies": {
-    "eslint": "^9.30.1"
   },
   "engines": {
     "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
