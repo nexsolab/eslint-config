@@ -1,5 +1,9 @@
 # Version history
 
+## 1.4 (08/07/2025)
+
+* Fixed vulnerabilities in dependencies
+
 ## 1.3 (16/10/2024)
 
 * Dependencies updated

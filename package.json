@@ -1,6 +1,6 @@
 {
   "name": "@nexso/eslint-config",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "nexso ESLint configuration",
   "main": "index.js",
   "scripts": {
