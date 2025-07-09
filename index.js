@@ -136,6 +136,14 @@ export default [
         'error',
         'consistent'
       ],
+      '@stylistic/function-paren-newline': [
+        'error',
+        'consistent',
+      ],
+      '@stylistic/function-call-argument-newline': [
+        'error',
+        'consistent',
+      ],
 
       // Allow _id for MongoDB compatibility
       'no-underscore-dangle': [
@@ -152,7 +160,15 @@ export default [
         {
           allowSingleLine: true,
         },
-      ]
+      ],
+      '@stylistic/object-curly-newline': [
+        'error',
+        {
+          minProperties: 5,
+          multiline: true,
+          consistent: true,
+        },
+      ],
     },
   },
 ];

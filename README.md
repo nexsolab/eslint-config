@@ -25,7 +25,7 @@ Used in the _nexso_ development (an aPaaS).
 Install the config and its peer dependencies:
 
 ```bash
-npm i -D @nexso/eslint-config eslint eslint-plugin-import-x
+npm i -D @nexso/eslint-config
 ```
 
 ## Usage
@@ -40,11 +40,10 @@ import nexso from '@nexso/eslint-config';
 export default [
   ...nexso,
   {
-    // Your custom rules here
     rules: {
       // Override rules if needed
-    }
-  }
+    },
+  },
 ];
 ```
 
