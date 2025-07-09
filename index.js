@@ -4,8 +4,8 @@ import securityPlugin from 'eslint-plugin-security';
 import importPlugin from 'eslint-plugin-import-x';
 import stylisticPlugin from '@stylistic/eslint-plugin';
 import nodePlugin from 'eslint-plugin-n';
-import babelTransformClassProperties from '@babel/plugin-transform-class-properties';
-import babelTransformPrivateMethods from '@babel/plugin-transform-private-methods';
+import babelParser from '@babel/eslint-parser';
+import pluginMicrosoftSdl from '@microsoft/eslint-plugin-sdl';
 
 export default [
   // JavaScript recommended rules
@@ -16,31 +16,45 @@ export default [
 
   // import recommended rules
   importPlugin.flatConfigs.recommended,
-  
+
   // Base configuration from eslint-config-airbnb-extended with plugins defined
   {
     files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
+      parser: babelParser,
+      parserOptions: {
+        requireConfigFile: false,
+        babelOptions: {
+          plugins: [
+            '@babel/plugin-transform-class-properties',
+            '@babel/plugin-transform-private-methods',
+          ],
+        },
+      },
     },
     plugins: {
-      //'import-x': importPlugin,
       '@stylistic': stylisticPlugin,
       'n': nodePlugin,
       'security': securityPlugin,
-      'babel': {
-        plugins: [
-          babelTransformClassProperties,
-          babelTransformPrivateMethods,
-        ],
-      },
     },
     ...airbnbExtended.configs.base.recommended[0],
   },
   
   // Apply additional configs from airbnb-extended
   ...airbnbExtended.configs.base.recommended.slice(1),
+
+  // Microsoft SDL recommended rules
+  ...pluginMicrosoftSdl.configs.common,
+  {
+    plugins: {
+      '@microsoft/sdl': pluginMicrosoftSdl,
+    },
+    rules: {
+      '@microsoft/sdl/no-unsafe-alloc': 'error',
+    }
+  },
 
   // Nexso custom rules and security plugin
   {
@@ -130,6 +144,15 @@ export default [
           allow: ['_id'],
         },
       ],
+
+      // Custom rules
+      '@stylistic/brace-style': [
+        'error',
+        '1tbs',
+        {
+          allowSingleLine: true,
+        },
+      ]
     },
   },
 ];
