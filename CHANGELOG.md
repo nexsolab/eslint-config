@@ -32,6 +32,10 @@
 * `@stylistic/eslint-plugin` ^3.1.0
 * `eslint-plugin-n` ^17.21.0
 
+## 1.4 (08/07/2025)
+
+* Fixed vulnerabilities in dependencies
+
 ## 1.3 (16/10/2024)
 
 * Dependencies updated
