@@ -1,5 +1,37 @@
 # Version history
 
+## 2.0.0 (09/07/2025)
+
+### ⚠️ **BREAKING CHANGES**
+
+* **ESLint 9.x only**: Dropped support for ESLint 8.x and legacy `.eslintrc` format
+* **Flat Config only**: Only supports ESLint 9.x Flat Config format
+* **New base**: Now uses `eslint-config-airbnb-extended` instead of manual AirBnB rules
+* **Dependencies**: Updated all dependencies to their latest versions
+* **Peer Dependencies**: Now requires `eslint-plugin-import-x` instead of `eslint-plugin-import`
+
+### ✨ **NEW FEATURES**
+
+* Built on top of `eslint-config-airbnb-extended` - a modern, maintained replacement for AirBnB configs
+* Full compatibility with ESLint 9.x
+* Improved performance and maintainability
+* Simplified configuration structure
+
+### 🔧 **CHANGES**
+
+* Removed legacy exports and compatibility code
+* Updated security plugin configurations
+* Simplified rule overrides
+* Updated README with new usage instructions
+
+### 📦 **DEPENDENCIES**
+
+* `eslint-config-airbnb-extended` ^1.0.6
+* `eslint-plugin-security` ^3.0.1
+* `eslint-plugin-import-x` ^4.16.1
+* `@stylistic/eslint-plugin` ^3.1.0
+* `eslint-plugin-n` ^17.21.0
+
 ## 1.4 (08/07/2025)
 
 * Fixed vulnerabilities in dependencies

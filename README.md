@@ -1,202 +1,99 @@
 # @nexso/eslint-config
 
-A extension of `eslint-config-airbnb-base` style but for newer javascript (ES2021+).
+A comprehensive ESLint configuration based on `eslint-config-airbnb-extended` with additional security rules and Nexso customizations.
 Used in the _nexso_ development (an aPaaS).
 
-> This is intended to work in Node.js 18+ environments.
+> ✨ **Version 2.0+**: Now fully compatible with ESLint 9.x using Flat Config format!
+>
+> - ✅ ESLint 9.x support with Flat Config
+> - ✅ Based on `eslint-config-airbnb-extended` (maintained AirBnB replacement)
+> - ✅ Security rules included
+> - ✅ Import/export validation
+> - ✅ Node.js 18+ environments
+> - ❌ No legacy ESLint 8.x support (use v1.x for legacy)
 
-## How to use
+## Features
 
-Install the config as development dependency `npm i -D eslint @nexso/eslint-config`.
+- **AirBnB Extended**: Built on top of `eslint-config-airbnb-extended` - a modern, maintained replacement for AirBnB configs
+- **Security**: Built-in security linting with `eslint-plugin-security`
+- **Import Management**: Proper import/export validation with `eslint-plugin-import-x`
+- **Modern JavaScript**: ES2021+ features supported
+- **ESLint 9 Only**: Full compatibility with ESLint 9.x Flat Config format
 
-Create a `.eslintrc` file with:
+## Installation
 
-```json
-{
-  "extends": "@nexso",
-  "rules": [
-  ]
-}
+Install the config and its peer dependencies:
+
+```bash
+npm i -D @nexso/eslint-config eslint eslint-plugin-import-x
 ```
 
-Add type module to your `package.json` file:
+## Usage
 
-```json
-{
-  "type": "module",
-  "name": "your-app-or-lib-name",
-  "version": "1.0.0",
-}
-```
+### ESLint 9.x (Flat Config) - Required
 
-### Using with eslint wizard (optional)
+Create a `eslint.config.js` file with:
 
-If you want to use with `eslint --init` command, simple change the file:
+```js
+import nexso from '@nexso/eslint-config';
 
-* Windows (Global installation):
-  `%APPDATA%\npm\node_modules\eslint\lib\init\config-initializer.js`
-
-* Linux:
-  `/usr/local/lib/node_modules/eslint/lib/init/config-initializer.js`
-
-And find the question: `name: "styleguide"` (~ line 540) and add nexso option:
-
-```javascript
-{
-    type: "select",
-    name: "styleguide",
-    message: "Which style guide do you want to follow?",
-    choices: [
-        { message: "nexso: https://github.com/nexsodev/eslint-config", name: "@nexso/eslint-config" }, // This
-        { message: "Airbnb: https://github.com/airbnb/javascript", name: "airbnb" },
-        { message: "Standard: https://github.com/standard/standard", name: "standard" },
-        { message: "Google: https://github.com/google/eslint-config-google", name: "google" },
-        { message: "XO: https://github.com/xojs/eslint-config-xo", name: "xo" }
-    ],
-```
-
-You can also use the file from this repo: [config-initializer.js](https://github.com/nexsolab/eslint-config/blob/main/config-initializer.js).
-
-## Secure by default
-
-This config also includes security plugins:
-
-* [eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security)
-* [@microsoft/eslint-plugin-sdl](https://github.com/microsoft/eslint-plugin-sdl)
-
-## Differences from AirBnb Base
-
-Some configs from [airbnb-base](https://www.npmjs.com/package/eslint-config-airbnb-base) was changed:
-
-### module imports
-
-Use ES6 syntax to import modules, natively in node.js 14+.
-
-```javascript
-// import npm or node built-in modules (old: `require()`)
-import { createPrivateKey, createPublicKey } from 'crypto';
-
-// Whatever ...
-function getKeyPair(pem) {
-  return {
-    public: createPublicKey(pem),
-    private: createPrivateKey(pem),
+export default [
+  ...nexso,
+  {
+    // Your custom rules here
+    rules: {
+      // Override rules if needed
+    }
   }
-}
-
-// export class, function, module, lib... (old `module.exports`)
-export default getKeyPair;
+];
 ```
 
-Note that you must add `type: module` to your `package.json` file:
+### Migration from v1.x
 
-```json
-{
-  "type": "module",
-  "name": "your-application",
-  "version": "1.0.0",
-  "main": "index.js"
-}
-```
+If you're upgrading from v1.x, you need to:
 
-So the source type is set to `module`:
+1. Update to ESLint 9.x
+2. Convert your `.eslintrc.*` to `eslint.config.js`
+3. Install the new peer dependencies
+4. Update your configuration format
 
-```json
-"parserOptions": {
-    "sourceType": "module"
-}
-```
+For legacy ESLint 8.x support, continue using `@nexso/eslint-config@1.x`.
 
-#### Import extensions
+## What's Included
 
-Node.js type module requires that you specify the extension when importing a local file:
+This configuration includes:
 
-```javascript
-// src/controller/foo.js
-import { Bar } from '../svc/index.js'; // index must be declared too
-```
+### Base Rules
 
-So the rule **import/extensions** is set as:
+- All rules from `eslint-config-airbnb-extended`
+- JavaScript recommended rules from `@eslint/js`
 
-```json
-"import/extensions": ["error", "always", {
-    "ignorePackages": true
-}]
-```
+### Security Rules
 
-### Private fields/methods
+- `eslint-plugin-security` for security-related linting
 
-Enable private fields and private methods:
+### Custom nexso Rules
 
-For this work in VS Code, Babel parser should be used and two plugins are used:
+- `import-x/extensions`: Enforces file extensions in imports (Node.js ES modules)
+- `no-restricted-syntax`: Prevents `for...in` loops, labels, and `with` statements
+- `max-len`: 100 characters with comment exception
+- `function-paren-newline`: Consistent parameter formatting
+- `no-underscore-dangle`: Allows `_id` for MongoDB compatibility
 
-```json
-"parser": "@babel/eslint-parser",
-"parserOptions": {
-    "ecmaVersion": 12,
-    "babelOptions": {
-        "plugins": [
-            "@babel/plugin-proposal-class-properties",
-            "@babel/plugin-proposal-private-methods"
-        ]
-    }
-},
-```
+## Requirements
 
-### for await...of
+- Node.js 18.18.0+ or 20.9.0+ or 21.1.0+
+- ESLint 9.30.1+
+- eslint-plugin-import-x 4.16.1+
 
-AirBnB config doesn't support this statement and thrown an error:
+## Contributing
 
-> iterators/generators require regenerator-runtime, which is too heavyweight for this guide to allow them. Separately, loops should be avoided in favor of array iterations.
+This package is used internally by nexso. Issues and pull requests are welcome.
 
-You can read the discussion at [Issue #1271](https://github.com/airbnb/javascript/issues/1271).
-
-This config enables this with the rules:
-
-```json
-"no-restricted-syntax": [
-    "error",
-    {
-        "selector": "ForInStatement",
-        "message": "for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array."
-    },
-    {
-        "selector": "LabeledStatement",
-        "message": "Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand."
-    },
-    {
-        "selector": "WithStatement",
-        "message": "`with` is disallowed in strict mode because it makes code impossible to predict and optimize."
-    }
-]
-```
-
-> Note the absence of `ForOfStatement` selector. (Since we don't have specific AST for `for await...of`).
-
-### max-len in JSDoc comments
-
-Ignore `max-len` in comments to not warn about long JS Docs lines in pure JavaScript.
-
-```javascript
-  /**
-   * To something that requires a long type param
-   *
-   * @param {import('@google-cloud/secret-manager').protos.google.cloud.secretmanager.v1.SecretVersion} secret The secret payload
-   */
-```
-
-So the rule **import/extensions** is set as:
-
-```json
-"max-len": [
-    "error",
-    { 
-        "code": 100,
-        "ignoreComments": true 
-    }
-]
-```
-
-## Version history
+## Version History
 
 See [CHANGELOG](https://github.com/nexsolab/eslint-config/blob/main/CHANGELOG.md)
+
+## License
+
+Apache-2.0
