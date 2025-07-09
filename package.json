@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@nexso/eslint-config",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "nexso ESLint configuration based on eslint-config-airbnb-extended with ESLint 9 Flat Config support",
   "main": "index.js",
   "exports": {
