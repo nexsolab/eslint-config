@@ -1,6 +1,6 @@
 # Version history
 
-## 2.0.0 (09/01/2025)
+## 2.0.0 (09/07/2025)
 
 ### ⚠️ **BREAKING CHANGES**
 
