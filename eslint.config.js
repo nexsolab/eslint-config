@@ -1,2 +1,4 @@
 // Test configuration file for ESLint 9
-module.exports = require('./index.js');
+import config from './index.js';
+
+export default config;
