@@ -1,55 +1,42 @@
-import assert from 'assert';
+import assert from 'node:assert/strict';
+
 import { ESLint } from 'eslint';
 
-const logger = console;
+import config from './index.js';
 
-async function main() {
-  // Test the flat config
-  try {
-    const configModule = await import('./index.js');
-    const config = configModule.default;
-    
-    const eslint = new ESLint({
-      overrideConfigFile: true,
-      overrideConfig: config,
-    });
+assert(Array.isArray(config), 'The exported Flat Config must be an array');
+assert(config.every(({ name }) => typeof name === 'string'), 'Every config must have a name');
 
-    const results = await eslint.lintText('var a = process.env.VAR');
-    const messages = results[0]?.messages || [];
-    
-    if (messages.length > 0) {
-      const ruleIds = messages.map((error) => error.ruleId);
+const eslint = new ESLint({
+  overrideConfigFile: true,
+  overrideConfig: config,
+});
 
-      assert(ruleIds.includes('no-var'), 'Should include no-var rule');
-      assert(ruleIds.includes('no-unused-vars'), 'Should include no-unused-vars rule');
-      assert(!ruleIds.includes('no-undef'), 'Should not include no-undef rule');
+const calculatedConfig = await eslint.calculateConfigForFile('example.js');
 
-      // eslint-disable-next-line no-console
-      logger.log('✅ Tests passed - Flat config is working correctly');
-      // eslint-disable-next-line no-console
-      logger.log('✅ Rules applied:', ruleIds.join(', '));
-    } else {
-      // eslint-disable-next-line no-console
-      logger.log('Warning: No errors found, config may not be working as expected');
-    }
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    logger.error('Error testing flat config:', error.message);
+assert.equal(calculatedConfig.rules['max-len'][0], 0);
+assert.equal(calculatedConfig.rules['@stylistic/max-len'][0], 2);
+assert.equal(calculatedConfig.rules['function-paren-newline'][0], 0);
+assert.equal(calculatedConfig.rules['@stylistic/function-paren-newline'][0], 2);
 
-    // Fallback test - just check if config loads
-    try {
-      const configModule = await import('./index.js');
-      const config = configModule.default;
-      assert(Array.isArray(config), 'Config should be an array for flat config');
-      assert(config.length > 0, 'Config should have at least one configuration object');
-      // eslint-disable-next-line no-console
-      logger.log('Flat config structure is valid');
-    } catch (loadError) {
-      // eslint-disable-next-line no-console
-      logger.error('Failed to load config:', loadError.message);
-      process.exit(1);
-    }
+for (const ruleId of Object.keys(calculatedConfig.rules)) {
+  if (!ruleId.startsWith('@stylistic/')) continue;
+
+  const coreRuleId = ruleId.replace('@stylistic/', '');
+  const coreRule = calculatedConfig.rules[coreRuleId];
+
+  if (coreRule) {
+    assert.equal(coreRule[0], 0, `${coreRuleId} must be disabled in favor of ${ruleId}`);
   }
 }
 
-main();
+const [result] = await eslint.lintText('var unused = process.env.VALUE;', {
+  filePath: 'example.js',
+});
+const ruleIds = result.messages.map(({ ruleId }) => ruleId);
+
+assert(ruleIds.includes('no-var'), 'The no-var rule must be enabled');
+assert(ruleIds.includes('no-unused-vars'), 'The no-unused-vars rule must be enabled');
+assert(!ruleIds.includes('no-undef'), 'Node.js globals must be recognized');
+
+console.log('ESLint 10 Flat Config and rule de-duplication tests passed.');

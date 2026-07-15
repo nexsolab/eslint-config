@@ -1,64 +1,51 @@
-import js from '@eslint/js';
-import airbnbExtended from 'eslint-config-airbnb-extended';
+import perfectionist from 'eslint-plugin-perfectionist';
+import stylisticPlugin from '@stylistic/eslint-plugin';
 import securityPlugin from 'eslint-plugin-security';
 import importPlugin from 'eslint-plugin-import-x';
-import stylisticPlugin from '@stylistic/eslint-plugin';
 import nodePlugin from 'eslint-plugin-n';
-import babelParser from '@babel/eslint-parser';
-import pluginMicrosoftSdl from '@microsoft/eslint-plugin-sdl';
-import perfectionist from 'eslint-plugin-perfectionist';
+import js from '@eslint/js';
+
+const javascriptFiles = ['**/*.js', '**/*.mjs', '**/*.cjs'];
 
 export default [
-  // JavaScript recommended rules
-  js.configs.recommended,
-
-  // node.js recommended rules
-  nodePlugin.configs['flat/recommended-module'],
-
-  // import recommended rules
-  importPlugin.flatConfigs.recommended,
-
-  // Base configuration from eslint-config-airbnb-extended with plugins defined
   {
-    files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
-    languageOptions: {
-      ecmaVersion: 2022,
-      sourceType: 'module',
-      parser: babelParser,
-      parserOptions: {
-        requireConfigFile: false,
-        babelOptions: {
-          plugins: [
-            '@babel/plugin-transform-class-properties',
-            '@babel/plugin-transform-private-methods',
-          ],
-        },
-      },
-    },
-    plugins: {
-      '@stylistic': stylisticPlugin,
-      n: nodePlugin,
-      security: securityPlugin,
-    },
-    ...airbnbExtended.configs.base.recommended[0],
+    ...js.configs.recommended,
+    name: '@nexso/eslint-config/javascript-recommended',
   },
 
-  // Apply additional configs from airbnb-extended
-  ...airbnbExtended.configs.base.recommended.slice(1),
-
-  // Microsoft SDL recommended rules
-  ...pluginMicrosoftSdl.configs.common,
   {
-    plugins: {
-      '@microsoft/sdl': pluginMicrosoftSdl,
+    ...nodePlugin.configs['flat/recommended-module'],
+    name: '@nexso/eslint-config/node-recommended',
+    files: javascriptFiles,
+  },
+
+  {
+    ...importPlugin.flatConfigs.recommended,
+    name: '@nexso/eslint-config/import-recommended',
+  },
+
+  {
+    name: '@nexso/eslint-config/javascript-language-options',
+    files: javascriptFiles,
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
     },
-    rules: {
-      '@microsoft/sdl/no-unsafe-alloc': 'error',
-    },
+  },
+
+  {
+    ...stylisticPlugin.configs.recommended,
+    name: '@nexso/eslint-config/stylistic-recommended',
+  },
+
+  {
+    ...securityPlugin.configs.recommended,
+    name: '@nexso/eslint-config/security-recommended',
   },
 
   // Code ordering
   {
+    name: '@nexso/eslint-config/perfectionist',
     plugins: {
       perfectionist,
     },
@@ -195,7 +182,8 @@ export default [
 
   // Nexso custom rules and security plugin
   {
-    files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
+    name: '@nexso/eslint-config/custom-rules',
+    files: javascriptFiles,
     plugins: {
       security: securityPlugin,
     },
@@ -217,6 +205,8 @@ export default [
       'security/detect-bidi-characters': 'warn',
 
       // Nexso custom rules
+      'no-var': 'error',
+
       // node.js 14+ type: module
       'import-x/extensions': [
         'error',
@@ -249,13 +239,7 @@ export default [
       ],
 
       // max-len comments
-      'max-len': [
-        'error',
-        {
-          code: 100,
-          ignoreComments: true,
-        },
-      ],
+      'max-len': 'off',
       '@stylistic/max-len': [
         'error',
         {
@@ -265,14 +249,8 @@ export default [
       ],
 
       // Let put arguments in a consistent order
-      'function-paren-newline': [
-        'error',
-        'consistent',
-      ],
-      'function-call-argument-newline': [
-        'error',
-        'consistent',
-      ],
+      'function-paren-newline': 'off',
+      'function-call-argument-newline': 'off',
       '@stylistic/function-paren-newline': [
         'error',
         'consistent',
@@ -281,6 +259,7 @@ export default [
         'error',
         'consistent',
       ],
+      '@stylistic/semi': ['error', 'always'],
 
       // Allow _id for MongoDB compatibility
       'no-underscore-dangle': [

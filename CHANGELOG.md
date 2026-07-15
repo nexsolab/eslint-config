@@ -1,77 +1,45 @@
-# Version history
+# Changelog
 
-## 2.0.3 (15/07/2026)
+All notable changes to this project are documented in this file.
 
-### ✨ **NEW FEATURES**
+## 3.0.0 - 2026-07-15
 
-* Added `eslint-plugin-perfectionist` to enforce consistent ordering of imports and related declarations.
-* Import sorting now follows a clear group order: built-in modules, npm packages, TypeScript types, internal modules, and other imports.
+### Breaking changes
 
-## 2.0.0 (09/07/2025)
+- Require ESLint 10 and Node.js `^20.19.0 || ^22.13.0 || >=24`.
+- Support Flat Config only.
+- Remove `eslint-config-airbnb-extended` and
+  `@microsoft/eslint-plugin-sdl`; their published peer dependency ranges do
+  not support ESLint 10.
+- Remove the Babel parser and Babel transform plugins. ESLint now parses the
+  supported modern ECMAScript syntax directly.
 
-### ⚠️ **BREAKING CHANGES**
+### Changed
 
-* **ESLint 9.x only**: Dropped support for ESLint 8.x and legacy `.eslintrc` format
-* **Flat Config only**: Only supports ESLint 9.x Flat Config format
-* **New base**: Now uses `eslint-config-airbnb-extended` instead of manual AirBnB rules
-* **Dependencies**: Updated all dependencies to their latest versions
-* **Peer Dependencies**: Now requires `eslint-plugin-import-x` instead of `eslint-plugin-import`
+- Upgrade `@stylistic/eslint-plugin` to 5.10.0,
+  `eslint-plugin-n` to 18.2.2, and `eslint-plugin-security` to 4.0.1.
+- Add `@eslint/js` as a direct dependency.
+- Give every configuration layer a stable name for ESLint 10 diagnostics.
+- Disable the core `max-len`, `function-paren-newline`, and
+  `function-call-argument-newline` rules in favor of their `@stylistic`
+  equivalents, eliminating duplicate reports and suppressions.
 
-### ✨ **NEW FEATURES**
+## 2.0.3 - 2026-07-15
 
-* Built on top of `eslint-config-airbnb-extended` - a modern, maintained replacement for AirBnB configs
-* Full compatibility with ESLint 9.x
-* Improved performance and maintainability
-* Simplified configuration structure
+- Add `eslint-plugin-perfectionist` and deterministic import/declaration
+  ordering.
 
-### 🔧 **CHANGES**
+## 2.0.0 - 2025-07-09
 
-* Removed legacy exports and compatibility code
-* Updated security plugin configurations
-* Simplified rule overrides
-* Updated README with new usage instructions
+- Move to ESLint 9 Flat Config.
+- Replace the legacy Airbnb package with `eslint-config-airbnb-extended`.
+- Add the security, import, Node.js, and stylistic plugin configuration.
 
-### 📦 **DEPENDENCIES**
+## 1.4.0 - 2025-07-08
 
-* `eslint-config-airbnb-extended` ^1.0.6
-* `eslint-plugin-security` ^3.0.1
-* `eslint-plugin-import-x` ^4.16.1
-* `@stylistic/eslint-plugin` ^3.1.0
-* `eslint-plugin-n` ^17.21.0
+- Update dependencies and address known vulnerabilities.
 
-## 1.4 (08/07/2025)
+## 1.3.0 - 2024-10-16
 
-* Fixed vulnerabilities in dependencies
-
-## 1.3 (16/10/2024)
-
-* Dependencies updated
-  * `eslint` 8.57.1
-  * `eslint-plugin-security` 1.17.1
-
-### ⚠️ **BREAKING CHANGES**
-
-* Requires node 18+ `^18.18.0 || ^20.9.0 || >=21.1.0`
-* The configs may be `eslint.config.js` file like described in [Configuration Files](https://eslint.org/docs/latest/use/configure/configuration-files) for the new ESLint version.
-
-### 1.2.0 (25/02/2023)
-
-* Dependencies updated
-  * `eslint` 8+
-  * `eslint-config-airbnb-base` 15+
-  * `@microsoft/eslint-plugin-sdl` 0.2.0
-
-### 1.1.2 (17/09/2021)
-
-* Fix problems with `@microsoft/sdl`:
-  * `eslint-plugin-node` as dependency.
-  * remove `eslint-plugin-security-node` because it was emitting errors.
-
-### 1.1.1 (17/09/2021)
-
-* Change `@microsoft/sdl` from `recommended` to `node`, that don't requires TypeScript.
-
-### 1.1.0 (17/09/2021)
-  
-* Security plugins are now installed by default
-* Remove the need for empty babel config
+- Update to ESLint 8.57.1 and Node.js 18+.
+- Add early Flat Config compatibility guidance.
