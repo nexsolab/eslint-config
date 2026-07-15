@@ -23,6 +23,10 @@ All notable changes to this project are documented in this file.
 - Disable the core `max-len`, `function-paren-newline`, and
   `function-call-argument-newline` rules in favor of their `@stylistic`
   equivalents, eliminating duplicate reports and suppressions.
+- Replace the Azure Pipelines release with GitHub Actions CI and OIDC-based npm
+  Trusted Publishing.
+- Add weekly safe `npm audit fix` maintenance with automatic patch releases
+  when dependency security updates pass all validations.
 
 ## 2.0.3 - 2026-07-15
 

@@ -1,0 +1,156 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Semantic version increment
+        required: true
+        default: patch
+        type: choice
+        options:
+          - current
+          - patch
+          - minor
+          - major
+  schedule:
+    - cron: '17 11 * * 1'
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Audit and publish
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: npm
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js for trusted publishing
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Install an OIDC-capable npm CLI
+        run: npm install --global npm@11
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Apply safe security updates
+        if: github.event_name == 'schedule'
+        id: security
+        shell: bash
+        run: |
+          npm audit fix || true
+          npm audit --audit-level=high
+
+          if git diff --quiet -- package.json package-lock.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No dependency changes were required." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Security updates changed the dependency lockfile." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Audit manual release
+        if: github.event_name == 'workflow_dispatch'
+        run: npm audit --audit-level=high
+
+      - name: Decide whether to publish
+        id: release
+        shell: bash
+        env:
+          MANUAL_VERSION: ${{ inputs.version }}
+          SECURITY_CHANGED: ${{ steps.security.outputs.changed }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "bump=$MANUAL_VERSION" >> "$GITHUB_OUTPUT"
+          elif [[ "$SECURITY_CHANGED" == "true" ]]; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "bump=patch" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run tests
+        if: steps.release.outputs.publish == 'true'
+        run: npm test
+
+      - name: Run lint
+        if: steps.release.outputs.publish == 'true'
+        run: npm run lint
+
+      - name: Create release commit and tag
+        if: steps.release.outputs.publish == 'true'
+        id: version
+        shell: bash
+        env:
+          BUMP: ${{ steps.release.outputs.bump }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if [[ "$BUMP" != "current" ]]; then
+            npm version "$BUMP" --no-git-tag-version
+          fi
+
+          VERSION=$(node --print "require('./package.json').version")
+          PACKAGE=$(node --print "require('./package.json').name")
+
+          if npm view "$PACKAGE@$VERSION" version > /dev/null 2>&1; then
+            echo "Package $PACKAGE@$VERSION already exists." >&2
+            exit 1
+          fi
+
+          git add package.json package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(release): v$VERSION [skip ci]"
+          fi
+          git tag --annotate "v$VERSION" --message "v$VERSION"
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "package=$PACKAGE" >> "$GITHUB_OUTPUT"
+
+      - name: Validate package contents
+        if: steps.release.outputs.publish == 'true'
+        run: npm pack --dry-run
+
+      - name: Push release commit and tag
+        if: steps.release.outputs.publish == 'true'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: git push --atomic origin HEAD:main "v$VERSION"
+
+      - name: Publish package with npm Trusted Publishing
+        if: steps.release.outputs.publish == 'true'
+        run: npm publish --access public
+
+      - name: Create GitHub release
+        if: steps.release.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: gh release create "v$VERSION" --verify-tag --generate-notes --title "v$VERSION"
+
+      - name: Write release summary
+        if: steps.release.outputs.publish == 'true'
+        env:
+          PACKAGE: ${{ steps.version.outputs.package }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: echo "Published $PACKAGE@$VERSION using npm Trusted Publishing." >> "$GITHUB_STEP_SUMMARY"

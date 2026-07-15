@@ -14,6 +14,8 @@
     "LICENSE"
   ],
   "scripts": {
+    "lint": "eslint index.js index.test.js eslint.config.js",
+    "prepublishOnly": "npm test && npm run lint",
     "test": "node ./index.test.js && node ./test-modern-features.js"
   },
   "repository": {
