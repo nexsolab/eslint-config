@@ -17,6 +17,7 @@ Used in the _nexso_ development (an aPaaS).
 - **AirBnB Extended**: Built on top of `eslint-config-airbnb-extended` - a modern, maintained replacement for AirBnB configs
 - **Security**: Built-in security linting with `eslint-plugin-security`
 - **Import Management**: Proper import/export validation with `eslint-plugin-import-x`
+- **Code Ordering**: `eslint-plugin-perfectionist` enforces consistent ordering for imports and related declarations
 - **Modern JavaScript**: ES2021+ features supported
 - **ESLint 9 Only**: Full compatibility with ESLint 9.x Flat Config format
 
@@ -78,6 +79,7 @@ This configuration includes:
 - `max-len`: 100 characters with comment exception
 - `function-paren-newline`: Consistent parameter formatting
 - `no-underscore-dangle`: Allows `_id` for MongoDB compatibility
+- `perfectionist/sort-imports`: Orders imports in this priority: built-in modules, npm packages, TypeScript types, internal modules, and other imports
 
 ## Requirements
 

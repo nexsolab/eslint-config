@@ -6,6 +6,7 @@ import stylisticPlugin from '@stylistic/eslint-plugin';
 import nodePlugin from 'eslint-plugin-n';
 import babelParser from '@babel/eslint-parser';
 import pluginMicrosoftSdl from '@microsoft/eslint-plugin-sdl';
+import perfectionist from 'eslint-plugin-perfectionist';
 
 export default [
   // JavaScript recommended rules
@@ -36,12 +37,12 @@ export default [
     },
     plugins: {
       '@stylistic': stylisticPlugin,
-      'n': nodePlugin,
-      'security': securityPlugin,
+      n: nodePlugin,
+      security: securityPlugin,
     },
     ...airbnbExtended.configs.base.recommended[0],
   },
-  
+
   // Apply additional configs from airbnb-extended
   ...airbnbExtended.configs.base.recommended.slice(1),
 
@@ -53,7 +54,143 @@ export default [
     },
     rules: {
       '@microsoft/sdl/no-unsafe-alloc': 'error',
-    }
+    },
+  },
+
+  // Code ordering
+  {
+    plugins: {
+      perfectionist,
+    },
+    rules: {
+      'perfectionist/sort-imports': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'type', 'internal', 'unknown'],
+          type: 'line-length',
+          order: 'desc',
+          fallbackSort: { type: 'alphabetical', order: 'asc' },
+          newlinesBetween: 1,
+          newlinesInside: 0,
+        },
+      ],
+      'perfectionist/sort-arrays': [
+        'warn',
+        {
+          type: 'alphabetical',
+          order: 'asc',
+          fallbackSort: { type: 'unsorted' },
+          ignoreCase: true,
+          specialCharacters: 'keep',
+          partitionByComment: true,
+          partitionByNewLine: false,
+          newlinesBetween: 1,
+          newlinesInside: 0,
+          useConfigurationIf: {},
+          groups: ['literal'],
+          customGroups: [],
+        },
+      ],
+      'perfectionist/sort-classes': [
+        'error',
+        {
+          type: 'alphabetical',
+          order: 'asc',
+          fallbackSort: { type: 'unsorted' },
+          ignoreCase: true,
+          specialCharacters: 'keep',
+          partitionByComment: false,
+          partitionByNewLine: false,
+          newlinesBetween: 1,
+          newlinesInside: 'ignore',
+          ignoreCallbackDependenciesPatterns: [],
+          groups: [
+            'index-signature',
+            ['protected-static-property', 'protected-static-accessor-property'],
+            ['protected-property', 'protected-accessor-property'],
+            ['private-static-property', 'private-static-accessor-property'],
+            ['private-property', 'private-accessor-property'],
+            ['static-property', 'static-accessor-property'],
+            ['property', 'accessor-property'],
+            'constructor',
+            ['static-get-method', 'static-set-method'],
+            ['static-method', 'static-function-property'],
+            ['get-method', 'set-method'],
+            'static-block',
+            ['method', 'function-property'],
+            ['protected-get-method', 'protected-set-method'],
+            ['protected-static-get-method', 'protected-static-set-method'],
+            ['protected-static-method', 'protected-static-function-property'],
+            ['protected-method', 'protected-function-property'],
+            ['private-static-get-method', 'private-static-set-method'],
+            ['private-static-method', 'private-static-function-property'],
+            ['private-get-method', 'private-set-method'],
+            ['private-method', 'private-function-property'],
+            'unknown',
+          ],
+          customGroups: [],
+          useConfigurationIf: {},
+          useExperimentalDependencyDetection: true,
+        },
+      ],
+      'perfectionist/sort-named-exports': [
+        'warn',
+        {
+          type: 'alphabetical',
+          order: 'asc',
+          fallbackSort: { type: 'unsorted' },
+          ignoreAlias: false,
+          ignoreCase: true,
+          specialCharacters: 'keep',
+          partitionByNewLine: false,
+          partitionByComment: true,
+          newlinesBetween: 1,
+          newlinesInside: 0,
+          groups: [],
+          customGroups: [],
+        },
+      ],
+      'perfectionist/sort-named-imports': [
+        'error',
+        {
+          type: 'alphabetical',
+          order: 'asc',
+          fallbackSort: { type: 'unsorted' },
+          ignoreAlias: false,
+          ignoreCase: true,
+          specialCharacters: 'keep',
+          partitionByNewLine: false,
+          partitionByComment: false,
+          newlinesBetween: 0,
+          newlinesInside: 0,
+          groups: [],
+          customGroups: [],
+        },
+      ],
+      'perfectionist/sort-object-types': [
+        'error',
+        {
+          type: 'alphabetical',
+          order: 'asc',
+          fallbackSort: { type: 'unsorted' },
+          ignoreCase: true,
+          specialCharacters: 'keep',
+          sortBy: 'name',
+          partitionByComment: false,
+          partitionByNewLine: false,
+          newlinesBetween: 1,
+          newlinesInside: 'ignore',
+          useConfigurationIf: {},
+          groups: [
+            'member',
+            'multiline-member',
+            { group: 'method', newlinesInside: 1 },
+            'unknown',
+          ],
+          customGroups: [],
+        },
+      ],
+    },
   },
 
   // Nexso custom rules and security plugin
@@ -88,7 +225,7 @@ export default [
           ignorePackages: true,
         },
       ],
-      "import-x/no-useless-path-segments": ["error", {
+      'import-x/no-useless-path-segments': ['error', {
         noUselessIndex: false, // Allow index.js files
       }],
       'import-x/no-amd': 'error', // Use only ES Modules
@@ -134,7 +271,7 @@ export default [
       ],
       'function-call-argument-newline': [
         'error',
-        'consistent'
+        'consistent',
       ],
       '@stylistic/function-paren-newline': [
         'error',

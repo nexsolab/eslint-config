@@ -1,5 +1,12 @@
 # Version history
 
+## 2.0.3 (15/07/2026)
+
+### ✨ **NEW FEATURES**
+
+* Added `eslint-plugin-perfectionist` to enforce consistent ordering of imports and related declarations.
+* Import sorting now follows a clear group order: built-in modules, npm packages, TypeScript types, internal modules, and other imports.
+
 ## 2.0.0 (09/07/2025)
 
 ### ⚠️ **BREAKING CHANGES**
