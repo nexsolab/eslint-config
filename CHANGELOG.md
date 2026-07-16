@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## 3.0.1 - 2026-07-16
+
+### Changed
+
+- Removed array ordering, keep class, import, export, and type ordering enforced as errors to preserve deterministic organization.
+
 ## 3.0.0 - 2026-07-15
 
 ### Breaking changes

@@ -61,23 +61,6 @@ export default [
           newlinesInside: 0,
         },
       ],
-      'perfectionist/sort-arrays': [
-        'warn',
-        {
-          type: 'alphabetical',
-          order: 'asc',
-          fallbackSort: { type: 'unsorted' },
-          ignoreCase: true,
-          specialCharacters: 'keep',
-          partitionByComment: true,
-          partitionByNewLine: false,
-          newlinesBetween: 1,
-          newlinesInside: 0,
-          useConfigurationIf: {},
-          groups: ['literal'],
-          customGroups: [],
-        },
-      ],
       'perfectionist/sort-classes': [
         'error',
         {
