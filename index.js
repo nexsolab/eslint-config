@@ -228,6 +228,10 @@ export default [
         {
           code: 100,
           ignoreComments: true,
+          ignoreUrls: true,
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true,
+          ignoreRegExpLiterals: true,
         },
       ],
 
@@ -266,6 +270,48 @@ export default [
           minProperties: 5,
           multiline: true,
           consistent: true,
+        },
+      ],
+    },
+  },
+
+  {
+    name: '@nexso/eslint-config/vue-recommended',
+    files: ['**/*.vue'],
+    rules: {
+      'vue/first-attribute-linebreak': [
+        'error',
+        {
+          singleline: 'ignore',
+          multiline: 'below',
+        },
+      ],
+      'vue/no-multiple-template-root': 'off',
+      'vue/html-self-closing': [
+        'error',
+        {
+          html: {
+            void: 'always',
+            normal: 'always',
+            component: 'always',
+          },
+          svg: 'always',
+          math: 'always',
+        },
+      ],
+      '@stylistic/max-len': 'off',
+      'vue/max-len': [
+        'error',
+        {
+          code: 100,
+          template: 100,
+          tabWidth: 2,
+          ignoreComments: true,
+          ignoreUrls: true,
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true,
+          ignoreRegExpLiterals: true,
+          ignoreHTMLAttributeValues: true,
         },
       ],
     },
