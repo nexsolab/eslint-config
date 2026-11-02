@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@nexso/eslint-config",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Nexso Flat Config for modern JavaScript projects using ESLint 10",
   "main": "index.js",
   "exports": {
