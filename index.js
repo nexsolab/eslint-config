@@ -1,16 +1,19 @@
 import perfectionist from 'eslint-plugin-perfectionist';
 import stylisticPlugin from '@stylistic/eslint-plugin';
+import packageJson from 'eslint-plugin-package-json';
 import securityPlugin from 'eslint-plugin-security';
 import importPlugin from 'eslint-plugin-import-x';
 import nodePlugin from 'eslint-plugin-n';
 import js from '@eslint/js';
 
 const javascriptFiles = ['**/*.js', '**/*.mjs', '**/*.cjs'];
+const packageJsonFiles = ['**/package.json'];
 
 export default [
   {
     ...js.configs.recommended,
     name: '@nexso/eslint-config/javascript-recommended',
+    ignores: packageJsonFiles,
   },
 
   {
@@ -22,6 +25,7 @@ export default [
   {
     ...importPlugin.flatConfigs.recommended,
     name: '@nexso/eslint-config/import-recommended',
+    ignores: packageJsonFiles,
   },
 
   {
@@ -36,16 +40,19 @@ export default [
   {
     ...stylisticPlugin.configs.recommended,
     name: '@nexso/eslint-config/stylistic-recommended',
+    ignores: packageJsonFiles,
   },
 
   {
     ...securityPlugin.configs.recommended,
     name: '@nexso/eslint-config/security-recommended',
+    ignores: packageJsonFiles,
   },
 
   // Code ordering
   {
     name: '@nexso/eslint-config/perfectionist',
+    ignores: packageJsonFiles,
     plugins: {
       perfectionist,
     },
@@ -160,6 +167,49 @@ export default [
           customGroups: [],
         },
       ],
+    },
+  },
+
+  {
+    ...packageJson.configs.recommended,
+    name: '@nexso/eslint-config/package-json',
+    settings: {
+      packageJson: { enforceForPrivate: true },
+    },
+    rules: {
+      // Enable every valid-* rule supplied by the installed plugin.
+      ...Object.fromEntries(Object.keys(packageJson.rules)
+        .filter(rule => rule.startsWith('valid-'))
+        .map(rule => [`package-json/${rule}`, 'error'])),
+      'package-json/consistent-package-manager-declaration': 'error',
+      'package-json/consistent-property-aliases': 'error',
+      'package-json/exports-subpaths-style': 'error',
+      'package-json/no-local-dependencies': 'error',
+      'package-json/no-redundant-files': 'error',
+      'package-json/no-redundant-publishConfig': 'error',
+      'package-json/order-properties': ['error', { order: 'sort-package-json' }],
+      'package-json/prefer-scoped-name': ['error', {
+        preferred: '@nexsolab',
+        allowed: ['@nexso'],
+      }],
+      'package-json/repository-shorthand': 'error',
+      'package-json/require-attribution': 'error',
+      'package-json/require-package-json-export': 'error',
+      'package-json/restrict-private-properties': 'error',
+      'package-json/scripts-name-casing': 'error',
+      'package-json/sort-collections': 'error',
+      'package-json/specify-peers-locally': 'error',
+      'package-json/unique-dependencies': 'error',
+      'package-json/require-author': 'error',
+      'package-json/require-devEngines': 'error',
+      'package-json/require-engines': 'error',
+      'package-json/require-license': 'error',
+      'package-json/require-name': 'error',
+      'package-json/require-repository': 'error',
+      'package-json/require-sideEffects': 'error',
+      'package-json/require-type': 'error',
+      'package-json/require-types': 'warn',
+      'package-json/require-version': 'error',
     },
   },
 

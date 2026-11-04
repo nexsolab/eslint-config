@@ -12,6 +12,7 @@ Version 3 is an ESLint 10-only Flat Config.
 - formatting rules from `@stylistic/eslint-plugin`
 - deterministic ordering through `eslint-plugin-perfectionist`
 - native parsing of current ECMAScript syntax, without Babel
+- validation and automatic fixes for `**/package.json` through [`eslint-plugin-package-json`](https://eslint-plugin-package-json.dev/).
 
 The config keeps only the `@stylistic/*` implementation of migrated formatting
 rules. For example, suppress a long line with:
@@ -27,7 +28,7 @@ and duplicate disable comments are no longer required.
 
 ## Requirements
 
-- Node.js `^20.19.0 || ^22.13.0 || >=24`
+- Node.js `^22.22.2 || >=24.15.0`
 - ESLint `^10.7.0`
 
 ## Installation
@@ -62,6 +63,20 @@ export default [
   ...nexso,
 ];
 ```
+
+## Package manifests
+
+The plugin is included as a direct dependency; consumers do not need to install it.
+Run `npx eslint .` to check source files and all `package.json` files, including
+workspace packages, or `npx eslint . --fix` to apply supported automatic fixes.
+Scripts that list only JavaScript or TypeScript files must also include
+`"**/package.json"` to check manifests.
+
+Manifest rules apply to private packages too (`enforceForPrivate: true`). All
+`valid-*` rules are errors, along with the selected consistency and required-field
+rules. `require-types` is a warning. Properties follow `sort-package-json` order;
+package names prefer `@nexsolab`, with `@nexso` also allowed. Missing metadata
+without an automatic fix must be supplied by the project.
 
 ## Migrating from version 2
 
