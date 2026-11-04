@@ -4,6 +4,7 @@ import packageJson from 'eslint-plugin-package-json';
 import securityPlugin from 'eslint-plugin-security';
 import importPlugin from 'eslint-plugin-import-x';
 import nodePlugin from 'eslint-plugin-n';
+import nodeTest from 'eslint-node-test';
 import js from '@eslint/js';
 
 const javascriptFiles = ['**/*.js', '**/*.mjs', '**/*.cjs'];
@@ -210,6 +211,26 @@ export default [
       'package-json/require-type': 'error',
       'package-json/require-types': 'warn',
       'package-json/require-version': 'error',
+    },
+  },
+
+  {
+    ...nodeTest.configs.recommended,
+    name: '@nexso/eslint-config/node-test',
+    ignores: packageJsonFiles,
+    rules: {
+      ...nodeTest.configs.recommended.rules,
+      'node-test/consistent-modifier-style': 'error',
+      'node-test/consistent-test-filename': 'error',
+      'node-test/consistent-test-it': 'error',
+      'node-test/no-assert-in-hook': 'error',
+      'node-test/no-conditional-in-test': 'error',
+      'node-test/no-skip-without-reason': 'error',
+      'node-test/no-sleep-in-test': 'error',
+      'node-test/no-snapshot-in-loop': 'error',
+      'node-test/no-unneeded-async-rejects-callback': 'error',
+      'node-test/require-hook': 'error',
+      'node-test/require-top-level-describe': 'error',
     },
   },
 
