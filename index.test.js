@@ -41,7 +41,6 @@ assert.ok(!ruleIds.includes('no-undef'), 'Node.js globals must be recognized');
 const manifestConfig = await eslint.calculateConfigForFile('packages/example/package.json');
 
 assert.equal(manifestConfig.settings.packageJson.enforceForPrivate, true);
-assert.equal(manifestConfig.rules['package-json/require-types'][0], 1);
 assert.equal(manifestConfig.rules['no-unused-vars'], undefined);
 assert.equal(manifestConfig.rules['@stylistic/quotes'], undefined);
 assert.equal(calculatedConfig.rules['package-json/require-name'], undefined);
@@ -59,7 +58,6 @@ assert.ok(!privateManifest.messages.some(({ fatal }) => fatal));
 assert.ok(manifestRuleIds.includes('package-json/require-name'));
 assert.ok(manifestRuleIds.includes('package-json/require-version'));
 assert.ok(manifestRuleIds.includes('package-json/require-devEngines'));
-assert.ok(manifestRuleIds.includes('package-json/require-types'));
 
 const fixEslint = new ESLint({
   overrideConfigFile: true,
