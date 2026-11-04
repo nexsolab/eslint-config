@@ -65,7 +65,7 @@ export default [
           type: 'line-length',
           order: 'desc',
           fallbackSort: { type: 'alphabetical', order: 'asc' },
-          newlinesBetween: 1,
+          newlinesBetween: 0,
           newlinesInside: 0,
         },
       ],
