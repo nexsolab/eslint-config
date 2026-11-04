@@ -1,27 +1,7 @@
 {
-  "type": "module",
   "name": "@nexso/eslint-config",
   "version": "3.0.6",
   "description": "Nexso Flat Config for modern JavaScript projects using ESLint 10",
-  "main": "index.js",
-  "exports": {
-    ".": "./index.js"
-  },
-  "files": [
-    "index.js",
-    "README.md",
-    "CHANGELOG.md",
-    "LICENSE"
-  ],
-  "scripts": {
-    "lint": "eslint index.js index.test.js eslint.config.js",
-    "prepublishOnly": "npm test && npm run lint",
-    "test": "node ./index.test.js && node ./test-modern-features.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nexsolab/eslint-config.git"
-  },
   "keywords": [
     "eslintconfig",
     "eslint",
@@ -43,17 +23,34 @@
     "es2021",
     "javascript"
   ],
-  "author": "Gabriel Anderson <gcacars@gmail.com> (https://github.com/gcacars)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nexsolab/eslint-config.git"
+  },
   "license": "Apache-2.0",
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+  "author": "Gabriel Anderson <gcacars@gmail.com> (https://github.com/gcacars)",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "main": "index.js",
+  "files": [
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "lint": "eslint index.js index.test.js eslint.config.js package.json",
+    "prepublishOnly": "npm test && npm run lint",
+    "test": "node ./index.test.js && node ./test-modern-features.js"
   },
   "dependencies": {
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
+    "eslint-node-test": "^1.0.1",
     "eslint-plugin-import-x": "^4.17.1",
     "eslint-plugin-n": "^18.2.2",
+    "eslint-plugin-package-json": "^1.14.0",
     "eslint-plugin-perfectionist": "^5.10.0",
     "eslint-plugin-security": "^4.0.1"
   },
@@ -64,6 +61,16 @@
     "eslint": "^10.7.0"
   },
   "engines": {
-    "node": "^20.19.0 || ^22.13.0 || >=24"
+    "node": "^22.22.2 || >=24.15.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^22.22.2 || >=24.15.0"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

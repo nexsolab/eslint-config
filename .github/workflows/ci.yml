@@ -23,9 +23,9 @@ jobs:
       fail-fast: false
       matrix:
         node-version:
-          - 20.19.0
-          - 22.14.0
+          - 22.22.2
           - 24.x
+          - 26.x
 
     steps:
       - name: Checkout repository
