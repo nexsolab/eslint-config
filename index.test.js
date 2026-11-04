@@ -1,8 +1,6 @@
 import assert from 'node:assert/strict';
-
 import packageJson from 'eslint-plugin-package-json';
 import { ESLint } from 'eslint';
-
 import config from './index.js';
 
 assert.ok(Array.isArray(config), 'The exported Flat Config must be an array');

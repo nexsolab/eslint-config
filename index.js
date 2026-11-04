@@ -209,7 +209,6 @@ export default [
       'package-json/require-repository': 'error',
       'package-json/require-sideEffects': 'error',
       'package-json/require-type': 'error',
-      'package-json/require-types': 'warn',
       'package-json/require-version': 'error',
     },
   },
